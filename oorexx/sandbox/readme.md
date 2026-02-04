@@ -1,1 +1,1 @@
-ooRexx sandbox readme
++ [Playing in the sandbox](https://sourceforge.net/p/oorexx/mailman/oorexx-devel/thread/33bd05330711150446l30ee70b2m43978a99e5426068%40mail.gmail.com/#msg9775768) (20071115 - Mail from Rick McGuire to the oorexx-devel list).
