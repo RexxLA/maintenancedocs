@@ -7,6 +7,10 @@ When Xalan is installed, the ooRexx build process uses it and a set of XSL templ
 
 The following information was provided by JLF.
 
+See [this thread](https://sourceforge.net/p/oorexx/mailman/oorexx-devel/thread/61d396bb-8a09-473b-8e24-b50578f01c47@gmail.com/) (20251023) about Xalan in the oorexx-devel list.
+
+Xalan for Windows can be downloaded [here](https://sourceforge.net/projects/oorexx/files/oorexx-buildutils/Windows/1.2.0/).
+
 main/trunk/CMakeLists.txt contains the macros used to generate the files (look for `"if (XALAN_EXECUTABLE)"`)
 
 From main/trunk/interpreter/messages/rexxmsg.xml, the following files are generated (see macro generate_message_file):
