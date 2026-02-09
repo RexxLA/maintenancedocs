@@ -1,11 +1,13 @@
 Xalan
 =====
 
-From [The Apache Xalan Project](https://xalan.apache.org/) "The Apache Xalan Project develops and maintains libraries and programs that transform XML documents using XSLT standard stylesheets".
+From [The Apache Xalan Project](https://xalan.apache.org/): "The Apache Xalan Project develops and maintains libraries and programs that transform XML documents using XSLT standard stylesheets".
 
-When Xalan is installed, the ooRexx build process uses it and a set of XSL templates to automatically generate a set of files.
+When Xalan is installed, the ooRexx build process uses it and a set of XSL templates to automatically generate some files.
 
-The following information was provided by JLF.
+[Installing Xalan on Windows](windows-install/).
+
+Most of the following information was provided by JLF.
 
 See [this thread](https://sourceforge.net/p/oorexx/mailman/oorexx-devel/thread/61d396bb-8a09-473b-8e24-b50578f01c47@gmail.com/) (20251023) about Xalan in the oorexx-devel list.
 
