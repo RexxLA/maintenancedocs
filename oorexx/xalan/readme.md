@@ -15,17 +15,18 @@ main/trunk/CMakeLists.txt contains the macros used to generate the files (look f
 
 From main/trunk/interpreter/messages/rexxmsg.xml, the following files are generated (see macro generate_message_file):
 
-* main/trunk/interpreter/messages/RexxErrorCodes.h (template: main/trunk/interpreter/messages/RexxErrorCodes.xsl)
-* main/trunk/interpreter/messages/RexxMessageNumbers.h (template: main/trunk/interpreter/messages/RexxMessageNumbers.xsl)
-* main/trunk/interpreter/messages/RexxMessageTable.h   (template: main/trunk/interpreter/messages/RexxMessageTable.xsl)
-* main/trunk/interpreter/messages/RexxErrorMessages.h  (template: main/trunk/interpreter/messages/RexxErrorMessages.xsl)
-* main/trunk/api/oorexxerrors.h                        (template: main/trunk/interpreter/messages/ApiErrorCodes.xsl)
+* main/trunk/interpreter/messages/RexxErrorCodes.h (template: main/trunk/interpreter/messages/RexxErrorCodes.xsl).
+* main/trunk/interpreter/messages/RexxMessageNumbers.h (template: main/trunk/interpreter/messages/RexxMessageNumbers.xsl).
+* main/trunk/interpreter/messages/RexxMessageTable.h   (template: main/trunk/interpreter/messages/RexxMessageTable.xsl).
+* main/trunk/interpreter/messages/RexxErrorMessages.h  (template: main/trunk/interpreter/messages/RexxErrorMessages.xsl).
+* main/trunk/api/oorexxerrors.h                        (template: main/trunk/interpreter/messages/ApiErrorCodes.xsl).
 * main/trunk/interpreter/messages/errnums.xml          (template: main/trunk/interpreter/messages/errnums.xsl).
   * &rarr; You should copy this file to docs/trunk/rexxref/en-US/errnums.xml and rebuild rexxref ([source](https://sourceforge.net/p/oorexx/mailman/oorexx-devel/thread/CADo9%3DceCFj8cA9ED4DTFAuHbGUm%3DqauNNxz%3DrJUmWKya4XL7Dg%40mail.gmail.com/#msg59293741)).
-* main/trunk/interpreter/messages/errnumsrxqueue.xml   (template: main/trunk/interpreter/messages/errnumsrxqueue.xsl)
+* main/trunk/interpreter/messages/errnumsrxqueue.xml   (template: main/trunk/interpreter/messages/errnumsrxqueue.xsl).
   * &rarr; You should copy this file to docs/trunk/rexxref/en-US/errnumsrxqueue.xml and rebuild rexxref ([source](https://sourceforge.net/p/oorexx/mailman/oorexx-devel/thread/CADo9%3DceCFj8cA9ED4DTFAuHbGUm%3DqauNNxz%3DrJUmWKya4XL7Dg%40mail.gmail.com/#msg59293741)).
-* main/trunk/interpreter/messages/errnumssubcom.xml    (template: main/trunk/interpreter/messages/errnumssubcom.xsl)
-* main/trunk/interpreter/messages/errnumsrexxc.xml     (template: main/trunk/interpreter/messages/errnumsrexxc.xsl)
+* main/trunk/interpreter/messages/errnumssubcom.xml    (template: main/trunk/interpreter/messages/errnumssubcom.xsl).
+  * &rarr; You should copy this file to docs/trunk/rexxref/en-US/errnumsrxqueue.xml and rebuild rexxref ([source](https://sourceforge.net/p/oorexx/mailman/oorexx-devel/thread/CADo9%3DceCFj8cA9ED4DTFAuHbGUm%3DqauNNxz%3DrJUmWKya4XL7Dg%40mail.gmail.com/#msg59293741)).
+* main/trunk/interpreter/messages/errnumsrexxc.xml     (template: main/trunk/interpreter/messages/errnumsrexxc.xsl).
 
 From main/trunk/interpreter/behaviour/PrimitiveClasses.xml, the following files are generated (see macro generate_class_header):
 
