@@ -10,6 +10,6 @@ The easy way
 * Add this new directory to your path.
 * Open a Command Prompt, and type `xalan` to verify that you installation works.
 
-Now `cmake` should file the Xalan executable:
+Now `cmake` should find the Xalan executable:
 
 > -- XALAN_EXECUTABLE is C:/xalan-c/Xalan.exe
