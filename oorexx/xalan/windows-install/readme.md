@@ -8,7 +8,7 @@ The easy way
 * Create a new directory, for example `C:\xalan`.
 * Copy all the files in the `bin` subdirectory of `Xerces.zip` *and* all the files of the `bin` subdirectory of `Xalan.zip`
   into this new directory.
-* Add it new directory to your path.
+* Add it to your path.
 * Open a Command Prompt, and type `xalan` to verify that you installation works.
 
 Now `cmake` should find the Xalan executable:
