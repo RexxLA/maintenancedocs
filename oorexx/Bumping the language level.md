@@ -125,6 +125,15 @@ value of the argument, which the parser cannot see in general. On an older
 release such a call fails with error 40.12, as it would if the program had
 been written for that release.
 
+The general rule (Rick McGuire, in
+[bug #2155](https://sourceforge.net/p/oorexx/bugs/2155/)): the required level
+exists to guarantee that the saved image can be turned back into live
+objects. A new option that leaves the image valid, and that an older release
+rejects with an appropriate error instead of crashing, does not need to be
+marked. That covers options chosen by the value of an argument, which the
+translator cannot detect, and usually new optional arguments of a built-in
+function too (Rick is "on the fence" about these).
+
 A new built-in function is marked by adding a `case` to
 `requireBuiltinLanguageLevel()`; any other feature, by a
 `requireLanguageLevel()` call where the parser recognizes it.
