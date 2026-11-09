@@ -133,12 +133,25 @@ A new built-in function is marked by adding a `case` to
 
 There is one more factor. A compiled program is a flattened image of the
 interpreter's internal objects (the instructions, the expression terms...).
-**Any change to the fields or the layout of a class that exists in both
-the old and the new release is an incompatible change**: the other release
-cannot read the image, so the default and the minimum language level have
-to go up.
+**Any change to the fields or the layout of a class whose objects are
+stored in the image is an incompatible change**: the other release cannot
+turn the image back into live objects. When the class appears in every
+compiled program, `DefaultLanguageLevel` itself has to go up. According to
+Rick McGuire ([bug #2156](https://sourceforge.net/p/oorexx/bugs/2156/)),
+that happens with:
 
-That can usually be avoided with a subclass. If a new feature needs an
+- extra fields in a fundamental class such as String or Array;
+- changes to Package, which is especially exposed, because things tend to
+  get added to it;
+- any change to the object headers, which invalidates every image;
+- a new class of object that gets stored in every compiled program.
+
+Classes written in Rexx, such as the extensions (`.LogicalWrapper`, say),
+are not affected: a compiled program does not store their objects, and
+loads them with `::REQUIRES` when it runs.
+
+When the class appears only in some programs, the change can usually be
+avoided with a subclass. If a new feature needs an
 extra field in, say, an instruction object, do not add the field to the
 instruction class: add a subclass of it that has the field, have the parser
 create an instance of the subclass only when the program uses the new
