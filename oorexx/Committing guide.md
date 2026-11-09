@@ -97,10 +97,10 @@ a message when you need help.
    "command line client tools"**. It is not installed by default.
 2. Open a new `cmd` window and check: `svn --version`.
 
-*Optional.* The repository has a client configuration file,
-<https://svn.code.sf.net/p/oorexx/code-0/svnconfig/config>, whose
-`[auto-props]` section makes `svn add` set some properties by itself. You do
-not need it: section 9 shows how to set them by hand.
+Nothing else needs configuring for file properties: the trunks set them by
+themselves when you add a file (section 9). The old client configuration file,
+<https://svn.code.sf.net/p/oorexx/code-0/svnconfig/config>, is not needed any
+more.
 
 ### Make SVN use your OpenSSH key
 
@@ -284,18 +284,40 @@ SVN stores some properties with each file. Three of them matter in ooRexx:
 | `svn:executable` | (any value) | Scripts run directly on Unix: `*.rex`, `*.sh`, and **`*.testGroup`** (the test suite runs them). |
 | `svn:mime-type` | e.g. `image/png` | Binary files, so that SVN never tries to diff them or change their line endings. |
 
-Set them when you add a file, before committing it. The full sequence for a
-new test group:
+`main/trunk`, `test/trunk` and `docs/trunk` carry an `svn:auto-props`
+property (since r13440-r13442, November 2026), so `svn add` sets them by
+itself, with no configuration on your side: `svn:eol-style` on text files,
+`svn:executable` as well on `*.rex`, `*.sh` and `*.testGroup`, and
+`svn:mime-type` on images and other binary files. Check them after the add.
+The full sequence for a new test group:
 
 ```
 svn add ooRexx\base\bif\SETLOCAL.testGroup
-svn propset svn:eol-style native ooRexx\base\bif\SETLOCAL.testGroup
-svn propset svn:executable ON ooRexx\base\bif\SETLOCAL.testGroup
+svn proplist -v ooRexx\base\bif\SETLOCAL.testGroup
 svn status
 ```
 
-For a new source file, header or document, only the `svn:eol-style` line is
-needed. For a new `.rex` or `.sh` script, both.
+`proplist` should show `svn:eol-style native` and `svn:executable *`. If a
+file's extension has no rule, it gets no property: set what it needs by hand,
+before committing:
+
+```
+svn propset svn:eol-style native file
+svn propset svn:executable ON file
+```
+
+To see the rules:
+
+```
+svn propget svn:auto-props svn+ssh://USERNAME@svn.code.sf.net/p/oorexx/code-0/main/trunk
+```
+
+If an extension that ooRexx uses is missing, say so on the developers' list:
+the rules are a property of each trunk (the same list in the three), changed
+with `svn propset svn:auto-props -F file .` and a commit of the folder.
+
+If `svn add` fails with "inconsistent newlines", the file mixes Windows and
+Unix line endings: make them all the same (any editor can) and add it again.
 
 > **Never write `svn propset svn:executable "*" file` on Windows.** It is
 > what the SVN book says, and on Unix it is fine, but on Windows `svn.exe`
@@ -353,8 +375,9 @@ the same working copy and the same configuration, so you can mix them.
    names.
 5. One commit per tree: code in `main/trunk`, tests in `test/trunk`,
    documentation in `docs/trunk`.
-6. New files: `svn add`, `svn:eol-style native`, and `svn:executable ON` for
-   scripts and test groups (never `"*"`).
+6. New files: `svn add` sets the properties; check them with
+   `svn proplist -v`, and if one is missing set it by hand
+   (`svn:executable ON`, never `"*"`).
 7. After committing, `svn log -v -r N`; then close the ticket citing the
    revisions.
 8. Changing an error message has its own procedure: see "Adding or changing
