@@ -39,7 +39,7 @@ anything in the list above gone into trunk since the last release?"
 | 6.04 | 4.2.0 | |
 | 6.05 | 5.0.0 | Not bumped for 5.1.0, although (Rick, #2039) it probably should have been. |
 | 6.06 | 5.2.0 | r13051 (Rony G. Flatscher, 17 Dec 2025), [bug #2039](https://sourceforge.net/p/oorexx/bugs/2039/). |
-| 6.07 | 5.3.0 | r13448 (9 Nov 2026), [bug #2155](https://sourceforge.net/p/oorexx/bugs/2155/): ERRORTEXT accepts an error code nn.nnn (RFE #766). It also set the default to 6.07, which is wrong (section 4). |
+| 6.07 | 5.3.0 | r13448 (9 Nov 2026), [bug #2155](https://sourceforge.net/p/oorexx/bugs/2155/): ERRORTEXT accepts an error code nn.nnn (RFE #766). It also set the default to 6.07, which was wrong; fixed in r13449 ([bug #2156](https://sourceforge.net/p/oorexx/bugs/2156/), section 4). |
 
 ## 3. How to bump it
 
@@ -104,17 +104,30 @@ For that, every package starts at `DefaultLanguageLevel`, the base level
 newer feature: when it recognizes one, it calls
 `LanguageParser::requireLanguageLevel()` with the level where that feature
 was introduced (the call only ever raises the level). The new built-in
-function `GC` of 5.2.0, for instance, should mark its package as requiring
-6.06. So every feature that bumps the language level (section 1) also needs
+function `GC` of 5.2.0, for instance, marks its package as requiring 6.06. So every feature that bumps the language level (section 1) also needs
 its `requireLanguageLevel()` call.
 
-**This is not yet what the interpreter does.** As of r13448 nothing calls
-`requireLanguageLevel()`, and `DefaultLanguageLevel` was set to the current
-level in r13051 (6.06) and r13448 (6.07): every compiled program requires
-the level of the interpreter that compiled it, and an older release refuses
-it even when it uses nothing new. This is a bug, still to be fixed: the
-default goes back to 6.05, and the features of 5.1.0, 5.2.0 and 5.3.0 get
-their `requireLanguageLevel()` calls.
+This is what the interpreter does since r13449
+([bug #2156](https://sourceforge.net/p/oorexx/bugs/2156/)). Before that,
+`DefaultLanguageLevel` had been set to the current level (6.06 in r13051,
+6.07 in r13448) and nothing called `requireLanguageLevel()`, so every
+program compiled by 5.2.0 was refused by 5.0.0 and 5.1.0 (and, briefly, every
+program compiled by trunk by every earlier release), even when it used nothing
+new. The features marked since r13449:
+
+| Level | Feature | Where it is marked |
+|---|---|---|
+| 6.06 | the `GC` built-in function | `LanguageParser::requireBuiltinLanguageLevel()`, called for a function call or `CALL` (also `CALL ON ... NAME`) once it is known to resolve to the built-in function and not to an internal label |
+| 6.06 | `::OPTIONS NUMERIC INHERIT` and `NOINHERIT` | `DirectiveParser.cpp`, `SUBDIRECTIVE_NUMERIC` |
+
+ERRORTEXT with an error code nn.nnn (6.07) is not marked: it depends on the
+value of the argument, which the parser cannot see in general. On an older
+release such a call fails with error 40.12, as it would if the program had
+been written for that release.
+
+A new built-in function is marked by adding a `case` to
+`requireBuiltinLanguageLevel()`; any other feature, by a
+`requireLanguageLevel()` call where the parser recognizes it.
 
 ### Changes to the image layout
 
@@ -144,5 +157,6 @@ both directions.
 that `.RexxInfo~name` equals `PARSE VERSION`; `METHOD.testGroup` (API)
 checks that `LanguageLevel()` agrees with `PARSE VERSION`. No test pins the
 value itself, so a bump needs no test changes, and a forgotten bump is not
-caught by the test suite. Nor does any test compile a program with `rexxc`
-and check the level it requires.
+caught by the test suite. `rexxc.testGroup` `test_bug_2156` (r13450) compiles
+small programs with `rexxc` and checks the level each one requires; add a
+case there for every feature that gets a `requireLanguageLevel()` call.
