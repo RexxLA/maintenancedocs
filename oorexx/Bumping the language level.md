@@ -4,11 +4,11 @@ ooRexx has two version numbers, and they move independently:
 
 - The **interpreter version** (5.3.0): `REXX_CURRENT_INTERPRETER_VERSION` in
   `main/trunk/api/oorexxapi.h`. It changes with every release.
-- The **language level** (6.06): `REXX_CURRENT_LANGUAGE_LEVEL`, in the same
+- The **language level** (6.07): `REXX_CURRENT_LANGUAGE_LEVEL`, in the same
   file. It changes only when the *language* changes.
 
 The language level is what a program sees as the second word of
-`PARSE VERSION` (`REXX-ooRexx_5.3.0(MT)_64-bit 6.06 9 Nov 2026`), as
+`PARSE VERSION` (`REXX-ooRexx_5.3.0(MT)_64-bit 6.07 9 Nov 2026`), as
 `.RexxInfo~languageLevel`, and what a native program gets from the API's
 `LanguageLevel()`. It is also stored in every program compiled with `rexxc`
 (see section 4).
@@ -39,13 +39,14 @@ anything in the list above gone into trunk since the last release?"
 | 6.04 | 4.2.0 | |
 | 6.05 | 5.0.0 | Not bumped for 5.1.0, although (Rick, #2039) it probably should have been. |
 | 6.06 | 5.2.0 | r13051 (Rony G. Flatscher, 17 Dec 2025), [bug #2039](https://sourceforge.net/p/oorexx/bugs/2039/). |
+| 6.07 | 5.3.0 | r13448 (9 Nov 2026), [bug #2155](https://sourceforge.net/p/oorexx/bugs/2155/): ERRORTEXT accepts an error code nn.nnn (RFE #766). |
 
 ## 3. How to bump it
 
-Since r13051 the string `"6.06"` is no longer written by hand anywhere in
-the interpreter: `PARSE VERSION` and `.RexxInfo` build it from
+Since r13051 the level is no longer written by hand anywhere in the
+interpreter: `PARSE VERSION` and `.RexxInfo` build it from
 `REXX_CURRENT_LANGUAGE_LEVEL`. A bump touches two files in `main/trunk`
-(the example goes from 6.06 to 6.07):
+(the example is r13448, from 6.06 to 6.07):
 
 `api/oorexxapi.h`: add the new constant and make it current.
 
@@ -87,7 +88,7 @@ REXX interpreter.*
 The design (Rick, #2039) is that the parser raises a package's required
 level only when the program uses a newer feature, through
 `LanguageParser::requireLanguageLevel()`, so that a compiled program that
-uses no new feature still runs on older interpreters. As of r13447, nothing
+uses no new feature still runs on older interpreters. As of r13448, nothing
 calls `requireLanguageLevel()`: every package starts at
 `DefaultLanguageLevel`, so every compiled program requires exactly the
 level of the interpreter that compiled it. In practice, after a bump, a
